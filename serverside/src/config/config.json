@@ -1,0 +1,13 @@
+{
+  "development": {
+    "server": "http://localhost/",
+    "user": "test_user",
+    "password": "test_password",
+    "PORT": 3001
+  },
+  "production": {
+    "server": "http://example.com/",
+    "user": "prod_user",
+    "password": "prod_password"
+  }
+}
