@@ -40,7 +40,6 @@ export const getImages = async (dispatch: any, param: string) => {
   const query = new URLSearchParams(params);
   const response = await fetch(`http://localhost:3001/file/show?${query}`);
   const data = await response.json();
-  console.log(data);
   if (data.images.length !== 0) {
     dispatch(setImages(data));
   }

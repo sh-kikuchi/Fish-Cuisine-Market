@@ -29,8 +29,6 @@ const storeSlice = createSlice({
   },
   reducers: {
     setStores: (state, action) => {
-      console.log(action.payload);
-      console.log(action.payload.stores);
       state.status = action.payload.status;
       state.data = action.payload.stores;
 
@@ -99,7 +97,6 @@ export const updateStore = async (dispatch: any, data: any) => {
 
 //get store data
 export const deleteStore = async (dispatch: any, params: any) => {
-  console.log(params);
   const postData = { storeidArray: params };
   const method = "POST";
   const body = JSON.stringify(postData);
@@ -107,7 +104,6 @@ export const deleteStore = async (dispatch: any, params: any) => {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   };
-  console.log(body);
   fetch("http://localhost:3001/store/delete", { method, headers, body })
     .then((res) =>
       window.location.href = '/store/list'

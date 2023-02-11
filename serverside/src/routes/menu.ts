@@ -41,7 +41,6 @@ router.get(
 router.post(
   "/register",
   (req: Request, res: Response) => {
-    console.log(req);
     const registerMenu = require("../api/menu/register");
     registerMenu(req, res);
   }
@@ -55,7 +54,6 @@ router.post(
 router.post(
   "/update",
   (req: Request, res: Response) => {
-    console.log(req);
     const updateMenu = require("../api/menu/update");
     updateMenu(req, res);
   }
@@ -69,12 +67,8 @@ router.post(
 router.post(
   "/delete",
   (req: Request, res: Response) => {
-    console.log(req);
     const deleteMenu = require("../api/menu/delete");
     deleteMenu(req, res);
   }
 );
-
-
-
 module.exports = router;

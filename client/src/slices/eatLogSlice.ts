@@ -50,7 +50,6 @@ export const getEatLogDetail = async (dispatch: any, storeid: string, menuid: st
   const query = new URLSearchParams(params);
   const response = await fetch(`http://localhost:3001/eatLog/detail?${query}`);
   const data = await response.json();
-  console.log(data);
   if (data.eatLogs && data.eatLogs.length !== 0) {
     dispatch(setEatLogs(data));
   }

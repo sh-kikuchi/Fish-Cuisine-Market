@@ -83,7 +83,6 @@ function EatLogFormPage() {
       file: formData,
       userid: Number(user.id)
     };
-    console.log(postData);
     registerEatLog(dispatch, postData, formData);
   }
 
@@ -93,7 +92,6 @@ function EatLogFormPage() {
     if (imageFile !== null) {
       formData.append("file", imageFile[0]);
     }
-    console.log(imageFile[0]);
     const postData = {
       storeid: Number(storeid),
       menuid: Number(menuid),
@@ -102,6 +100,7 @@ function EatLogFormPage() {
       date: date,
       rating: rating,
       file: formData,
+      userid: Number(user.id)
     };
     updateEatLog(dispatch, postData, formData);
   }

@@ -11,11 +11,7 @@ const TAG = "[api/file/register.ts]"
 async function fileRegister(req: Request, res: Response) {
   console.log(TAG + ' is called');
   let { storeid, menuid, userid, filename } = req.body;
-  console.log(req.body);
   let errors: any = [];
-
-  console.log(req.body);
-  console.log(errors);
 
   //登録処理
   if (errors.length > 0) {

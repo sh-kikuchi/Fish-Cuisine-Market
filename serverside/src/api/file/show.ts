@@ -10,9 +10,6 @@ const TAG = "[api/file/show.ts]"
  */
 async function fileShow(req: Request, res: Response, userid: string) {
   console.log(TAG + ' is called');
-  // let userid = Number(req.query.userid);
-
-  console.log(typeof userid)
 
   pool.query(
     `SELECT  * FROM files

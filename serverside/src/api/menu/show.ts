@@ -10,8 +10,6 @@ const TAG = "[api/mst/store/show.ts]"
 async function menuShow(req: Request, res: Response, storeid: string) {
   console.log(TAG + ' is called');
 
-  console.log(typeof storeid)
-
   pool.query(
     `SELECT  * FROM menus
         WHERE store_id = $1`,

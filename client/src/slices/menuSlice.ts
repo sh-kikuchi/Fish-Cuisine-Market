@@ -46,7 +46,6 @@ const menuSlice = createSlice({
 });
 
 export const registerMenu = async (dispatch: any, data: any) => {
-  console.log(data);
   const method = "POST";
   const body = JSON.stringify(data);
   const headers = {
@@ -85,7 +84,6 @@ export const getMenuDetail = async (dispatch: any, storeid: string, menuid: stri
 export const updateMenu = async (dispatch: any, data: any) => {
   const method = "POST";
   const body = JSON.stringify(data);
-  console.log(body);
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'

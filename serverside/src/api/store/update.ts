@@ -9,7 +9,6 @@ const TAG = "[api/auth/update.ts]"
  */
 async function updateStore(req: Request, res: Response) {
   console.log(TAG + ' is called');
-  console.log(req.body);
   let { storeid, userid, storeName, address1, address2 } = req.body;
   storeid = Number(storeid);
   userid = Number(userid);

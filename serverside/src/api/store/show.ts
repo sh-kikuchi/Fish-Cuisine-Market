@@ -11,9 +11,6 @@ const TAG = "[api/mst/store/show.ts]"
 async function mstStoreShow(req: Request, res: Response, userid: string) {
   console.log(TAG + ' is called');
   // let userid = Number(req.query.userid);
-
-  console.log(typeof userid)
-
   pool.query(
     `SELECT  * FROM stores
         WHERE user_id = $1`,

@@ -41,7 +41,6 @@ export const getReferenceDetail = async (dispatch: any, eatlogid: string) => {
   const query = new URLSearchParams(params);
   const response = await fetch(`http://localhost:3001/reference/detail?${query}`);
   const data = await response.json();
-  console.log(data);
   if (data.reference && data.reference.length !== 0) {
     dispatch(setReference(data));
   }

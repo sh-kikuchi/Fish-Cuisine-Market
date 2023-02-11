@@ -11,9 +11,6 @@ const TAG = "[api/auth/delete.ts]"
 async function deleteStore(req: Request, res: Response) {
   console.log(TAG + ' is called');
   let { storeidArray } = req.body;
-
-  console.log(storeidArray);
-
   let errors: any = [];
 
   for (let i = 0; i < storeidArray.length; i++) {

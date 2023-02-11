@@ -10,9 +10,7 @@ const TAG = "[api/mst/menu/update.ts]"
  */
 async function updateMenu(req: Request, res: Response) {
   console.log(TAG + ' is called');
-  console.log(req.body);
   let { menuid, storeid, menuName, memo, price, option } = req.body;
-
   let errors: any = [];
 
   //ヴァリデーション
@@ -38,7 +36,6 @@ async function updateMenu(req: Request, res: Response) {
           console.log(err);
           return res.status(500).send({ message: "DB接続に失敗しました" });
         }
-        console.log(results.rows);
         return res.status(200).send({ message: "メニューの更新に成功しました" });
       }
     );

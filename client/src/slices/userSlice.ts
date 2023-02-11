@@ -35,7 +35,6 @@ export const getUser = async (dispatch: any, data: any) => {
   };
   fetch("http://localhost:3001/auth/show", { method, headers, body })
     .then((res) =>
-      //console.log(res.json());
       res.json()
     ).then((data) => {
       dispatch(setUser(data));

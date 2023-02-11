@@ -53,7 +53,6 @@ function MenuFormPage() {
   };
 
   if (init && store.length !== 0 && menu.length !== 0) {
-    console.log(store);
     setMenuName(menu[0].name);
     setPrice(menu[0].price);
     setMemo(menu[0].memo);
@@ -85,7 +84,6 @@ function MenuFormPage() {
       memo: memo,
       option: option,
     };
-    console.log(formData);
     updateMenu(dispatch, formData);
   }
 

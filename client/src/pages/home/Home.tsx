@@ -10,7 +10,6 @@ function Home() {
   useEffect(() => {
     //トークン取得
     let data = localStorage.getItem('data');
-    console.log(data);
     if (!data || data === null || data === undefined) {
       window.location.href = "/login"
     }

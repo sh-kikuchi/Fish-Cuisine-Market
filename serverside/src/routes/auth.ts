@@ -28,7 +28,6 @@ router.post(
 router.post(
   "/register",
   (req: Request, res: Response) => {
-    console.log(req);
     const userRegister = require("../api/auth/register");
     userRegister(req, res);
   }

@@ -42,7 +42,6 @@ router.get(
 router.post(
   "/register",
   (req: Request, res: Response) => {
-    console.log(req);
     const eatLogRegister = require("../api/eatLog/register");
     eatLogRegister(req, res);
   }
@@ -56,7 +55,6 @@ router.post(
 router.post(
   "/update",
   (req: Request, res: Response) => {
-    console.log(req);
     const eatLogUpdate = require("../api/eatLog/update");
     eatLogUpdate(req, res);
   }
@@ -70,7 +68,6 @@ router.post(
 router.post(
   "/delete",
   (req: Request, res: Response) => {
-    console.log(req);
     const deleteEatlog = require("../api/eatLog/delete");
     deleteEatlog(req, res);
   }

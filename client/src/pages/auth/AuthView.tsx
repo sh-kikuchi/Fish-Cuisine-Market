@@ -22,7 +22,6 @@ function AuthView() {
     //トークン取得
     await axios.post("http://localhost:3001/auth/show", accessToken)
       .then(function (response) {
-        console.log(response.data);
         setUserid(response.data.id);
         setUsername(response.data.username);
         setEmail(response.data.email);
@@ -69,7 +68,6 @@ function AuthView() {
 
     await axios.post("http://localhost:3001/login", formData)
       .then(function (response) {
-        console.log(response);
         if (response.status === 200) {
           localStorage.setItem("data", JSON.stringify(response.data.token));
           return window.location.href = "/" //React-router使えたらそうする
@@ -93,7 +91,6 @@ function AuthView() {
     };
     await axios.post("http://localhost:3001/register", formData)
       .then(function (response) {
-        console.log(response);
         setUsername('');
         setEmail('');
         setPassword('');
@@ -119,10 +116,8 @@ function AuthView() {
       password: password,
       newPassword: newPassword,
     };
-    console.log(formData);
     await axios.post("http://localhost:3001/auth/edit", formData)
       .then(function (response) {
-        console.log(response);
         setPassword('');
         setNewPassword('');
         localStorage.setItem("data", JSON.stringify(response.data.token));

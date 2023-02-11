@@ -11,7 +11,6 @@ router.get(
   "/show",
   (req: Request, res: Response) => {
     const userid = req.query.userid;
-    console.log(userid);
     const showStores = require("../api/store/show");
     showStores(req, res, userid);
   }
@@ -39,7 +38,6 @@ router.get(
 router.post(
   "/register",
   (req: Request, res: Response) => {
-    console.log(req);
     const mstStoreRegister = require("../api/store/register");
     mstStoreRegister(req, res);
   }
@@ -52,7 +50,6 @@ router.post(
 router.post(
   "/update",
   (req: Request, res: Response) => {
-    console.log(req);
     const updateStore = require("../api/store/update");
     updateStore(req, res);
   }
@@ -65,11 +62,8 @@ router.post(
 router.post(
   "/delete",
   (req: Request, res: Response) => {
-    console.log(req);
     const deleteStore = require("../api/store/delete");
     deleteStore(req, res);
   }
 );
-
-
 module.exports = router;

@@ -36,7 +36,6 @@ async function mstStoreRegister(req: Request, res: Response) {
           console.log(err);
           return res.status(500).send({ message: "DB接続に失敗しました" });
         }
-        console.log(results.rows);
         if (results.rows.length > 0) {
           return res.status(400).send({ message: "定食屋が登録済みです" });
         } else {
@@ -49,7 +48,6 @@ async function mstStoreRegister(req: Request, res: Response) {
                 console.log(err);
                 return res.status(500).send({ message: "DB接続に失敗しました" });
               }
-              console.log(results.rows);
               return res.status(200).send({ message: "定食屋の登録に成功しました" });
             }
           );
