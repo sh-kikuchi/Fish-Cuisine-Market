@@ -38,7 +38,6 @@ async function eatLogRegister(req: Request, res: Response) {
         console.log(err);
         return res.status(500).send({ message: "DB接続に失敗しました" });
       }
-      console.log(results.rows);
       if (results.rows.length > 0) {
         pool.query(
           `INSERT INTO eatlogs (store_id, menu_id, date, text, rating)
@@ -49,8 +48,6 @@ async function eatLogRegister(req: Request, res: Response) {
               console.log(err);
               return res.status(500).send({ message: "DB接続に失敗しました" });
             }
-            console.log(results.rows);
-
             return res.status(200).send({ message: "定食屋の登録に成功しました" });
           }
         );

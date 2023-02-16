@@ -2,12 +2,13 @@ import { Request, Response } from 'express';
 const { pool } = require("../../../database/pool");
 const bcrypt = require('bcrypt');
 const fs = require('fs');
+const trashFiles = require('../../functions/trashFiles');
 const TAG = "[api/eatLog/update.ts]"
 
 /**
- * 新規登録処理
- * @req userData JSON
- * { email: 'test@test.com', password: 'testtest' }
+ * イートログ更新処理
+ * @params userData JSON
+ * @returns message, status
  */
 async function updateEatLog(req: Request, res: Response) {
   console.log(TAG + ' is called');
@@ -35,13 +36,10 @@ async function updateEatLog(req: Request, res: Response) {
           console.log(err);
           return res.status(500).send({ message: "DB接続に失敗しました" });
         }
+
+        /*****【Func】ファイル削除******/
+        trashFiles(results.rows);
         //ファイル削除
-        try {
-          fs.unlinkSync('C:/Users/nbcc9/react-express/client/src/images/' + results.rows[0].filename);
-          console.log('削除しました。');
-        } catch (error) {
-          throw error;
-        }
         pool.query(
           `DELETE FROM files WHERE eatlog_id = $1`,
           [eatlogid],
@@ -80,9 +78,5 @@ async function updateEatLog(req: Request, res: Response) {
       }
     );
   }
-
-
 }
 module.exports = updateEatLog;
-
-const doUpdate = () => { }

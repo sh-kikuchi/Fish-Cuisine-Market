@@ -18,7 +18,7 @@ async function deleteEatLog(req: Request, res: Response) {
 
   for (let i = 0; i < eatlogidArray.length; i++) {
     pool.query(
-      `DELETE FROM stores where id = $1;`,
+      `DELETE FROM eatlogs where id = $1;`,
       [eatlogidArray[i]],
       (err: string) => {
         if (err) {
