@@ -1,4 +1,3 @@
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -10,7 +9,6 @@ interface menuState {
   option: string;
 
 }
-
 export const menuState = {
   storeid: 0,
   menuName: "",
@@ -18,7 +16,6 @@ export const menuState = {
   memo: "",
   option: ""
 }
-
 //createSlice:reducerとactionsをまとめる
 const menuSlice = createSlice({
   name: 'menus',
@@ -44,7 +41,7 @@ const menuSlice = createSlice({
     },
   }
 });
-
+/******Create******/
 export const registerMenu = async (dispatch: any, data: any) => {
   const method = "POST";
   const body = JSON.stringify(data);
@@ -57,8 +54,7 @@ export const registerMenu = async (dispatch: any, data: any) => {
       window.location.href = '/menu/list/' + data.storeid
     ).catch(console.error);
 }
-
-//get store data
+/******Show******/
 export const getMenus = async (dispatch: any, param: string) => {
   const params = { storeid: param };
   const query = new URLSearchParams(params);
@@ -68,8 +64,7 @@ export const getMenus = async (dispatch: any, param: string) => {
     dispatch(setMenus(data));
   }
 };
-
-//get store data
+/******Show******/
 export const getMenuDetail = async (dispatch: any, storeid: string, menuid: string) => {
   const params = { storeid: storeid, menuid: menuid };
   const query = new URLSearchParams(params);
@@ -79,8 +74,7 @@ export const getMenuDetail = async (dispatch: any, storeid: string, menuid: stri
     dispatch(setMenus(data));
   }
 };
-
-//get store data
+/******Update******/
 export const updateMenu = async (dispatch: any, data: any) => {
   const method = "POST";
   const body = JSON.stringify(data);
@@ -94,7 +88,21 @@ export const updateMenu = async (dispatch: any, data: any) => {
     )
     .catch(console.error);
 };
-
+/******Delete******/
+export const deleteMenus = async (dispatch: any, ids: any, store_id: any) => {
+  const postData = { menuidArray: ids };
+  const method = "POST";
+  const body = JSON.stringify(postData);
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
+  fetch("http://localhost:3001/menu/delete", { method, headers, body })
+    .then((res) =>
+      window.location.href = '/menu/list/' + store_id
+    )
+    .catch(console.error);
+};
 //export(actions/reducer)
 export const { setMenus } = menuSlice.actions
 export const menuReducer = menuSlice.reducer

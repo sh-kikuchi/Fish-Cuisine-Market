@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { getMenus } from '../../slices/menuSlice';
+import { getMenus, deleteMenus } from '../../slices/menuSlice';
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -19,8 +19,6 @@ const columns: GridColDef[] = [
   { field: 'memo', headerName: '備考' },
 ];
 
-
-// function FormList(props: Props) {
 function MenuListPage() {
   //get QueryParams
   const { storeid } = useParams();
@@ -42,9 +40,8 @@ function MenuListPage() {
     }
   });
 
-
   const getUserData = async (accessToken: any) => {
-    //トークン取得
+    //get Tokens
     await axios.post("http://localhost:3001/auth/show", accessToken)
       .then(function (response) {
         setUserid(response.data.id);
@@ -57,7 +54,6 @@ function MenuListPage() {
         console.log(error);
         window.location.href = "/login" //取得失敗時はログイン画面に戻る
       });
-
   };
 
   const rows = menu;
@@ -65,20 +61,18 @@ function MenuListPage() {
   const handleDeleteRows = () => {
     console.log('handleDeleteRows is called');
     if (selectionModel.length === 0) return;
+    deleteMenus(dispatch, selectionModel, storeid);
   }
-
   const handleMoveEatLogPage = () => {
     console.log('handleDeleteRows is called');
     if (selectionModel.length === 0) return;
     window.location.href = "/eatLog/list/" + storeid + '/' + selectionModel[0];
   }
-
   const handleMoveDetailPage = () => {
     console.log('handleDeleteRows is called');
     if (selectionModel.length === 0) return;
     window.location.href = "/menu/detail/" + storeid + '/' + selectionModel[0];
   }
-
   const handleMoveRegisterMenuPage = () => {
     console.log('handleMoveRegisterMenuPage is called');
     window.location.href = "/menu/register/" + storeid;

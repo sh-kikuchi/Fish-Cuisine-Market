@@ -11,7 +11,6 @@ const TAG = "[api/mst/menu/register.ts]"
 async function mstMenuRegister(req: Request, res: Response) {
   console.log(TAG + ' is called');
   let { storeid, menuName, memo, price, option } = req.body;
-  console.log(req.body);
   let errors: any = [];
 
   //ヴァリデーション
@@ -21,9 +20,7 @@ async function mstMenuRegister(req: Request, res: Response) {
   if (!storeid) {
     errors.push({ message: "定食屋の登録が完了しておりません" });
   }
-
   console.log(errors);
-
   //登録処理
   if (errors.length > 0) {
     return res.status(400).send(errors[0]); //エラーの一番上のみ表示

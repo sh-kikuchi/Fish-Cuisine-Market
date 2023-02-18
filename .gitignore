@@ -1,11 +1,11 @@
 
 # client
-client/src/images
+client/src/images/*.jpg
+client/src/images/*.png
 client/dist
 
 # serverside
-serverside/uploads
-serverside/.vscode
+/.vscode/*
 
 # testing
 /coverage
@@ -22,7 +22,7 @@ serverside/node_modules
 .DS_Store
 
 #env
-**/**/.env
+.env
 
 #logs
-**/**/*.log
+*.log

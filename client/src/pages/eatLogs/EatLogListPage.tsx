@@ -5,7 +5,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from '../../slices/userSlice'
 import { getStores } from '../../slices/storeSlice'
-import { getEatLogs } from '../../slices/eatLogSlice'
+import { deleteEatLogs, getEatLogs } from '../../slices/eatLogSlice'
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -60,10 +60,11 @@ function EatLogListPage() {
   const handleDeleteRows = () => {
     console.log('handleDeleteRows is called');
     if (selectionModel.length === 0) return;
+    deleteEatLogs(dispatch, selectionModel, storeid, menuid);
   }
 
   const handleMoveDetailPage = () => {
-    console.log('handleDeleteRows is called');
+    console.log('handleMoveDetailPage is called');
     if (selectionModel.length === 0) return;
     window.location.href = "/eatLog/detail/" + storeid + '/' + menuid + '/' + selectionModel[0];
   }

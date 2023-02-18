@@ -83,6 +83,22 @@ export const registerEatLog = async (dispatch: any, data: any, file: any) => {
     ).catch(console.error);
 };
 
+/******Delete******/
+export const deleteEatLogs = async (dispatch: any, ids: any, store_id: any, menu_id: any) => {
+  const postData = { eatlogidArray: ids };
+  const method = "POST";
+  const body = JSON.stringify(postData);
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
+  fetch("http://localhost:3001/eatLog/delete", { method, headers, body })
+    .then((res) =>
+      window.location.href = '/eatLog/list/' + store_id + '/' + menu_id
+    )
+    .catch(console.error);
+};
+
 const uploadFile = (file: any, data: any) => {
   const method = "POST";
   const body = file;

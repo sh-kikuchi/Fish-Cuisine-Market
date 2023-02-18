@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 const { pool } = require("../../../database/pool");
 const bcrypt = require('bcrypt');
-const fs = require('fs');
 const trashFiles = require('../../functions/trashFiles');
 const TAG = "[api/eatLog/update.ts]"
 
@@ -36,10 +35,9 @@ async function updateEatLog(req: Request, res: Response) {
           console.log(err);
           return res.status(500).send({ message: "DB接続に失敗しました" });
         }
-
         /*****【Func】ファイル削除******/
         trashFiles(results.rows);
-        //ファイル削除
+
         pool.query(
           `DELETE FROM files WHERE eatlog_id = $1`,
           [eatlogid],

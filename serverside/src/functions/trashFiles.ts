@@ -1,10 +1,8 @@
 import { Request, Response } from 'express';
 const TAG = "[functions/trashFiles.ts]"
 const fs = require('fs');
-const path = require('path');
-
 /**
- * ファイル削除
+ * Trash image files
  * @params targetFiles
  * @return -
  */
@@ -20,5 +18,4 @@ const trashFiles = (targetFiles: Array<any>) => {
   }
   console.log(TAG + 'end');
 }
-console.log(TAG + 'is beginning');
 module.exports = trashFiles;
