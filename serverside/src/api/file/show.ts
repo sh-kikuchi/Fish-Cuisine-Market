@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 const { pool } = require("../../../database/pool");
 const bcrypt = require('bcrypt');
 const TAG = "[api/file/show.ts]"
-
 /**
  * 新規登録処理
  * @req userData JSON
@@ -10,10 +9,14 @@ const TAG = "[api/file/show.ts]"
  */
 async function fileShow(req: Request, res: Response, userid: string) {
   console.log(TAG + ' is called');
-
   pool.query(
-    `SELECT  * FROM files
-        WHERE user_id = $1`,
+    `SELECT
+       *
+      FROM eatlogs as e
+      JOIN menus   as m  on m.id = e.menu_id
+      JOIN stores  as s  on s.id = e.store_id
+      JOIN files   as f  on e.id = f.eatlog_id
+      WHERE s.user_id = $1;`,
     [Number(userid)],
     (err: string, results: any) => {
       if (err) {

@@ -11,21 +11,18 @@ async function referenceDetail(req: Request, res: Response, eatlogid: string) {
   console.log(TAG + ' is called');
 
   pool.query(
-    `select
+    `SELECT
         s.name as storeName,
         m.name as MenuName,
         e.text,
         e.date,
         e.rating,
         f.filename
-      from  eatlogs as e
-      left join menus as m
-      on m.id = e.menu_id
-      left join stores as s
-      on s.id = e.store_id
-      left join files as f
-      on e.id = f.eatlog_id
-      where e.id = $1;`,
+      FROM eatlogs as e
+      JOIN menus   as m on m.id = e.menu_id
+      JOIN stores  as s on s.id = e.store_id
+      JOIN files   as f on e.id = f.eatlog_id
+      WHERE e.id = $1;`,
     [Number(eatlogid)],
     (err: string, results: any) => {
       if (err) {

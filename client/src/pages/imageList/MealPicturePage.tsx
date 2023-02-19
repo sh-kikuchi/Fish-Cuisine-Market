@@ -48,9 +48,10 @@ function MealPicturePage() {
 
   const handleOpen = (eatlogid: any) => (e: any) => {
     e.preventDefault();
-    setOpen(true);
+    alert(eatlogid);
     getReferenceDetail(dispatch, eatlogid);
-    if (reference.length) {
+    if (reference && reference.length) {
+      setOpen(true);
       setStoreName(reference[0].storename);
       setMenuName(reference[0].menuname);
       setText(reference[0].text);
@@ -62,6 +63,12 @@ function MealPicturePage() {
 
   const handleClose = () => {
     setOpen(false);
+    setStoreName('');
+    setMenuName('');
+    setText('');
+    setDate('');
+    setRating('0');
+    setFileName('');
   };
 
   const style = {
