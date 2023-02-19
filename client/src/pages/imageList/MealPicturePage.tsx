@@ -48,7 +48,6 @@ function MealPicturePage() {
 
   const handleOpen = (eatlogid: any) => (e: any) => {
     e.preventDefault();
-    alert(eatlogid);
     getReferenceDetail(dispatch, eatlogid);
     if (reference && reference.length) {
       setOpen(true);
