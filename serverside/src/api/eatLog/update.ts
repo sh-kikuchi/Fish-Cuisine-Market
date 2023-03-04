@@ -15,7 +15,6 @@ async function updateEatLog(req: Request, res: Response) {
   storeid = Number(storeid);
   menuid = Number(menuid);
   let errors: any = [];
-
   //ヴァリデーション
   if (!storeid || !menuid) {
     errors.push({ message: "定食屋とメニューは入力して下さい" });
@@ -23,58 +22,76 @@ async function updateEatLog(req: Request, res: Response) {
   if (!text) {
     errors.push({ message: "なんか・・・書いてください" });
   }
-
   //既存のファイルは削除（delete/insert)
   if (file) {
+    const pgClient = await pool.connect();
+    await pgClient.query("begin");
     //ファイル削除
     pool.query(
       `SELECT filename FROM files WHERE eatlog_id = $1`,
       [eatlogid],
-      (err: string, results: any) => {
+      async (err: string, results: any) => {
         if (err) {
           console.log(err);
           return res.status(500).send({ message: "DB接続に失敗しました" });
         }
         /*****【Func】ファイル削除******/
         trashFiles(results.rows);
-
-        pool.query(
-          `DELETE FROM files WHERE eatlog_id = $1`,
-          [eatlogid],
-          (err: string, results: any) => {
-            if (err) {
-              console.log(err);
-              return res.status(500).send({ message: "DB接続に失敗しました" });
-            }
-            //登録処理
-            pool.query(
-              `UPDATE eatLogs SET store_id = $1, menu_id = $2, date = $3, text = $4, rating = $5 WHERE id = $6`,
-              [storeid, menuid, date, text, rating, eatlogid],
-              (err: string, results: any) => {
-                if (err) {
-                  console.log(err);
-                  return res.status(500).send({ message: "DB接続に失敗しました" });
-                }
-                return res.status(200).send({ message: "食ログの登録に成功しました" });
+        try {
+          await pgClient.query(
+            `DELETE FROM files WHERE eatlog_id = $1`,
+            [eatlogid],
+            async (err: string, results: any) => {
+              if (err) {
+                console.log(err);
               }
-            );
+              //更新処理
+              await pgClient.query(
+                `UPDATE eatLogs SET store_id = $1, menu_id = $2, date = $3, text = $4, rating = $5 WHERE id = $6`,
+                [storeid, menuid, date, text, rating, eatlogid],
+                (err: string, results: any) => {
+                  if (err) {
+                    errors.push(err);
+                  }
+                  pgClient.query("commit");
+                }
+              );
+            }
+          );
+        } catch (err) {
+          await pgClient.query("rollback");
+          errors.push(err);
+        } finally {
+          if (errors.length !== 0) {
+            return res.status(500).send({ message: "DB接続に失敗しました" });
           }
-        );
+          return res.status(200).send({ message: "定食屋の更新に成功しました" });
+        }
       }
     );
   } else {
-    //登録処理
-    pool.query(
-      `UPDATE eatLogs SET store_id = $1, menu_id = $2, date = $3, text = $4, rating = $5 WHERE id = $6`,
-      [storeid, menuid, date, text, rating, eatlogid],
-      (err: string, results: any) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send({ message: "DB接続に失敗しました" });
+    const pgClient = await pool.connect();
+    try {
+      await pgClient.query("begin");
+      await pgClient.query(
+        `UPDATE eatLogs SET store_id = $1, menu_id = $2, date = $3, text = $4, rating = $5 WHERE id = $6`,
+        [storeid, menuid, date, text, rating, eatlogid],
+        (err: string, results: any) => {
+          if (err) {
+            console.log(err);
+          }
+          pgClient.query("commit");
         }
-        return res.status(200).send({ message: "食ログの登録に成功しました" });
+      );
+    } catch (err) {
+      await pgClient.query("rollback");
+      errors.push(err);
+    } finally {
+      if (errors.length !== 0) {
+        return res.status(500).send({ message: "DB接続に失敗しました" });
       }
-    );
+      return res.status(200).send({ message: "定食屋の更新に成功しました" });
+    }
   }
 }
 module.exports = updateEatLog;

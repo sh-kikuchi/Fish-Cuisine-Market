@@ -7,6 +7,9 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useParams } from 'react-router-dom';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import { Stack, Typography } from '@mui/material';
 
 function StoreFormPage() {
   const [storeName, setStoreName] = useState('');
@@ -21,6 +24,20 @@ function StoreFormPage() {
 
   const dispatch = useDispatch();
 
+  //breadcrumb
+  const breadcrumbs = [
+    <Link underline="hover" key="1" color="inherit"
+      href="/">
+      TOP
+    </Link>,
+    <Link underline="hover" key="1" color="inherit"
+      href="store/list">
+      お店一覧
+    </Link>,
+    <Typography key="3" color="text.primary">
+      お店マスタ
+    </Typography>,
+  ];
   useEffect(() => {
     let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
     jwt = jwt ? JSON.parse(jwt) : '';
@@ -68,46 +85,53 @@ function StoreFormPage() {
   }
 
   return (
-    <Container maxWidth="md" sx={{ height: '100vh', margin: '10px auto' }}>
-      <Box textAlign="center" fontSize={24}>
-        お店マスタ
-      </Box>
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        label="店名"
-        value={storeName}
-        fullWidth
-        sx={{ margin: '10px auto' }}
-        placeholder="50字以内"
-        onChange={(event) => setStoreName(event.target.value)}
-      />
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        label="アドレス1(都道府県）"
-        value={address1}
-        fullWidth
-        sx={{ margin: '10px auto' }}
-        onChange={(event) => setAddress1(event.target.value)}
-      />
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        label="アドレス2(市町村以降）"
-        value={address2}
-        fullWidth
-        sx={{ margin: '10px auto' }}
-        placeholder="50字以内"
-        onChange={(event) => setAddress2(event.target.value)}
-      />
-      <Box sx={{ minWidth: '300', display: 'flex', justifyContent: 'center' }}>
+    <div style={{ height: 400, width: '100%', marginTop: '10px' }} >
+      <Stack spacing={2} sx={{ marginLeft: 2 }}>
+        <Breadcrumbs separator="›" aria-label="breadcrumb">
+          {breadcrumbs}
+        </Breadcrumbs>
+      </Stack>
+      <Container maxWidth="md" sx={{ height: '100vh', margin: '10px auto' }}>
+        <Box textAlign="center" fontSize={24}>
+          お店マスタ
+        </Box>
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          label="店名"
+          value={storeName}
+          fullWidth
+          sx={{ margin: '10px auto' }}
+          placeholder="50字以内"
+          onChange={(event) => setStoreName(event.target.value)}
+        />
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          label="アドレス1(都道府県）"
+          value={address1}
+          fullWidth
+          sx={{ margin: '10px auto' }}
+          onChange={(event) => setAddress1(event.target.value)}
+        />
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          label="アドレス2(市町村以降）"
+          value={address2}
+          fullWidth
+          sx={{ margin: '10px auto' }}
+          placeholder="50字以内"
+          onChange={(event) => setAddress2(event.target.value)}
+        />
+        <Box sx={{ minWidth: '300', display: 'flex', justifyContent: 'center' }}>
 
-        <Button variant="contained"
-          onClick={storeid !== undefined ? handleUpdateStore : handleRegisterStore}>登録する
-        </Button>
-      </Box>
-    </Container >
+          <Button variant="contained"
+            onClick={storeid !== undefined ? handleUpdateStore : handleRegisterStore}>登録する
+          </Button>
+        </Box>
+      </Container >
+    </div>
   );
 }
 export default StoreFormPage;

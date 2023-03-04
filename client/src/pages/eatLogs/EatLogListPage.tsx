@@ -1,29 +1,28 @@
 
 
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from '../../slices/userSlice'
-import { getStores } from '../../slices/storeSlice'
 import { deleteEatLogs, getEatLogs } from '../../slices/eatLogSlice'
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useParams } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import { Stack, Typography } from '@mui/material';
 
 
 const columns: GridColDef[] = [
-  // { field: 'id', headerName: 'ID', width: 70 },
-  // { field: 'user_id', headerName: 'user_id', width: 0 },
-  { field: 'id', headerName: 'ID' },
-  { field: 'text', headerName: '感想', minWidth: 400 },
-  { field: 'rating', headerName: '★の数', width: 100 },
   { field: 'date', headerName: '日付', width: 200 },
+  { field: 'text', headerName: '感想', minWidth: 1000 },
+  { field: 'rating', headerName: '★', width: 100 },
 ];
-
 
 // function FormList(props: Props) {
 function EatLogListPage() {
+
   //get QueryParams
   const { storeid } = useParams();
   const { menuid } = useParams();
@@ -34,6 +33,31 @@ function EatLogListPage() {
   const user = useSelector((state: any) => state.user.data);
   const eatLog = useSelector((state: any) => state.eatLog.data);
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+
+  //breadcrumb
+  const breadcrumbs = [
+    <Link underline="hover" key="1" color="inherit"
+      href="/">
+      TOP
+    </Link>,
+    <Link underline="hover" key="1" color="inherit"
+      href="/store/list">
+      お店一覧
+    </Link>,
+    <Link
+      underline="hover"
+      key="2"
+      color="inherit"
+      onClick={() => {
+        window.location.href = "/menu/list/" + storeid;
+      }}
+    >
+      メニュー一覧
+    </Link >,
+    <Typography key="3" color="text.primary">
+      食事記録一覧
+    </Typography>,
+  ];
 
   useEffect(() => {
     let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
@@ -57,54 +81,73 @@ function EatLogListPage() {
 
   const rows = eatLog;
 
+
   const handleDeleteRows = () => {
     console.log('handleDeleteRows is called');
-    if (selectionModel.length === 0) return;
+    if (selectionModel.length === 0) {
+      alert("お店を選択して下さい");
+      return;
+    };
     deleteEatLogs(dispatch, selectionModel, storeid, menuid);
   }
 
   const handleMoveDetailPage = () => {
     console.log('handleMoveDetailPage is called');
-    if (selectionModel.length === 0) return;
+    if (selectionModel.length === 0 || selectionModel.length > 1) {
+      alert("お店を1つ選択して下さい");
+      return;
+    }
     window.location.href = "/eatLog/detail/" + storeid + '/' + menuid + '/' + selectionModel[0];
   }
-
   const handleMoveRegisterEatLogPage = () => {
     console.log('handleMoveRegisterEatLogPage is called');
     window.location.href = "/eatLog/register/" + storeid + '/' + menuid;
   }
-
-
   return (
     <div style={{ height: 400, width: '100%', marginTop: '10px' }} >
+      <Stack spacing={2} sx={{ marginLeft: 2 }}>
+        <Breadcrumbs separator="›" aria-label="breadcrumb">
+          {breadcrumbs}
+        </Breadcrumbs>
+      </Stack>
       <Box textAlign="center" fontSize={24}>
-        感想一覧
+        食事記録一覧
       </Box>
       <Box component='div' sx={{
         p: 2, display: 'flex',
-        justifyContent: 'start',
+        justifyContent: 'space-between',
       }}>
-        <Button
-          variant="contained"
-          color='error'
-          sx={{ margin: 1 }}
-          onClick={handleDeleteRows}>
-          削除
-        </Button>
-        <Button
-          variant="contained"
-          color='warning'
-          sx={{ margin: 1 }}
-          onClick={handleMoveDetailPage}>
-          詳細
-        </Button>
-        <Button
-          variant="contained"
-          color='secondary'
-          sx={{ margin: 1 }}
-          onClick={handleMoveRegisterEatLogPage}>
-          新規
-        </Button>
+        <Box component='div'>
+          <Tooltip title="画面へ遷移する" placement="top">
+            <Button
+              variant="text"
+              color='secondary'
+              sx={{ margin: 1 }}
+              onClick={handleMoveRegisterEatLogPage}>
+              食事記録を追加する
+            </Button>
+          </Tooltip>
+        </Box>
+        <Box component='div'>
+          <Tooltip title="1つ選択" placement="top">
+            <Button
+              variant="contained"
+              color='primary'
+              sx={{ margin: 1 }}
+              onClick={handleDeleteRows}>
+              削除
+            </Button>
+          </Tooltip>
+          <Tooltip title="複数" placement="top">
+            <Button
+              variant="contained"
+              color='error'
+              sx={{ margin: 1 }}
+              onClick={handleMoveDetailPage}>
+              詳細
+            </Button>
+          </Tooltip>
+        </Box>
       </Box>
       <DataGrid
         rows={rows}
@@ -118,8 +161,7 @@ function EatLogListPage() {
           setSelectionModel(newSelectionModel);
         }}
       />
-    </div>
+    </div >
   );
 }
-
 export default EatLogListPage;

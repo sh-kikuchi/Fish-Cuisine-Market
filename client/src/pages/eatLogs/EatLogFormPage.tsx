@@ -11,7 +11,9 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import { Stack, Typography } from '@mui/material';
 
 function EatLogFormPage() {
   //get QueryParams
@@ -35,6 +37,26 @@ function EatLogFormPage() {
   const [imageFile, setImageFile] = useState<any | null>(null)
   const [value, setValue] = React.useState<number | null>(2);
 
+  //breadcrumb
+  const breadcrumbs = [
+    <Link underline="hover" key="1" color="inherit"
+      href="/">
+      TOP
+    </Link>,
+    <Link
+      underline="hover"
+      key="2"
+      color="inherit"
+      onClick={() => {
+        window.location.href = "/eatLog/list/" + storeid + "/" + menuid;
+      }}
+    >
+      食事記録一覧
+    </Link >,
+    <Typography key="3" color="text.primary">
+      食事記録マスタ
+    </Typography>,
+  ];
 
   useEffect(() => {
     let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
@@ -106,58 +128,65 @@ function EatLogFormPage() {
   }
 
   return (
-    <Container maxWidth="md" sx={{ height: '100vh', margin: '10px auto' }}>
-      <Box textAlign="center" fontSize={24}>
-        感想
-      </Box>
-      <TextField
-        type="date"
-        id="outlined-basic"
-        variant="outlined"
-        label=" 日付"
-        value={date}
-        fullWidth
-        sx={{ margin: '10px auto' }}
-        onChange={(event) => setDate(event.target.value)}
-      />
-      <Typography component="legend">星いくつ？</Typography>
-      <Rating
-        name="simple-controlled"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-          setRating(String(newValue));
-        }}
-      />
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        label="感想をどうぞ"
-        value={text}
-        fullWidth
-        sx={{ margin: '10px auto' }}
-        placeholder="50字以内"
-        onChange={(event) => setText(event.target.value)}
-      />
-      添付ファイル
-      <div>
-        <input
-          type="file"
-          name="myFile"
-          onChange={(event => onFileInputChange(event))}
+    <div style={{ height: 400, width: '100%', marginTop: '10px' }} >
+      <Stack spacing={2} sx={{ marginLeft: 2 }}>
+        <Breadcrumbs separator="›" aria-label="breadcrumb">
+          {breadcrumbs}
+        </Breadcrumbs>
+      </Stack>
+      <Container maxWidth="md" sx={{ height: '100vh', margin: '10px auto' }}>
+        <Box textAlign="center" fontSize={24}>
+          感想
+        </Box>
+        <TextField
+          type="date"
+          id="outlined-basic"
+          variant="outlined"
+          label=" 日付"
+          value={date}
+          fullWidth
+          sx={{ margin: '10px auto' }}
+          onChange={(event) => setDate(event.target.value)}
         />
-      </div>
+        <Typography component="legend">星いくつ？</Typography>
+        <Rating
+          name="simple-controlled"
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+            setRating(String(newValue));
+          }}
+        />
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          label="感想をどうぞ"
+          value={text}
+          fullWidth
+          sx={{ margin: '10px auto' }}
+          placeholder="50字以内"
+          onChange={(event) => setText(event.target.value)}
+        />
+        添付ファイル
+        <div>
+          <input
+            type="file"
+            name="myFile"
+            onChange={(event => onFileInputChange(event))}
+          />
+        </div>
 
-      <Box sx={{ minWidth: '300', display: 'flex', justifyContent: 'center' }}>
-        <Button
-          variant="contained"
-          onClick={eatlogid !== undefined || eatlogid != null
-            ? handleUpdateEatLog
-            : handleRegisterEatLog
-          }>登録する
-        </Button>
-      </Box>
-    </Container>
+        <Box sx={{ minWidth: '300', display: 'flex', justifyContent: 'center' }}>
+          <Button
+            variant="contained"
+            onClick={eatlogid !== undefined || eatlogid != null
+              ? handleUpdateEatLog
+              : handleRegisterEatLog
+            }>登録する
+          </Button>
+        </Box>
+      </Container>
+    </div>
   );
 }
 export default EatLogFormPage;

@@ -7,14 +7,15 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Rating from '@mui/material/Rating';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import { Stack, Typography } from '@mui/material';
 
 function MealPicturePage() {
   const dispatch = useDispatch();
@@ -29,6 +30,17 @@ function MealPicturePage() {
   const [rating, setRating] = useState('0');
   const [fileName, setFileName] = useState('');
 
+  //breadcrumb
+  const breadcrumbs = [
+    <Link underline="hover" key="1" color="inherit"
+      href="/">
+      TOP
+    </Link>,
+    <Typography key="3" color="text.primary">
+      お魚（定食）図鑑
+    </Typography>,
+  ];
+
   useEffect(() => {
     let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
     jwt = jwt ? JSON.parse(jwt) : '';
@@ -36,7 +48,6 @@ function MealPicturePage() {
     if (accessToken) {
       getUser(dispatch, accessToken);
       getImageData();
-      //getImages(dispatch, user.id);
     }
   }, [user.id]);
 
@@ -47,16 +58,15 @@ function MealPicturePage() {
   };
 
   const handleOpen = (eatlogid: any) => (e: any) => {
-    e.preventDefault();
     getReferenceDetail(dispatch, eatlogid);
     if (reference && reference.length) {
-      setOpen(true);
       setStoreName(reference[0].storename);
       setMenuName(reference[0].menuname);
       setText(reference[0].text);
       setDate(reference[0].date);
       setRating(reference[0].rating);
       setFileName(reference[0].filename);
+      setOpen(true);
     }
   };
 
@@ -83,66 +93,72 @@ function MealPicturePage() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ height: '100vh', margin: '20px auto' }}>
-      <Box textAlign="center" fontSize={24}>
-        お魚定食図鑑
-      </Box>
-      <ImageList sx={{ width: 500, height: 450, margin: '0 auto' }} cols={3} rowHeight={164} >
-        {image.map((item: any) => (
-          <ImageListItem key={item.id}>
-            <img
-              src={require(`../../images/${item.filename}`)}
-              // src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              alt={item.eatlog_id}
-              loading="lazy"
-              onClick={handleOpen(item.eatlog_id)}
-            />
-          </ImageListItem>
+    <div style={{ height: 400, width: '100%', marginTop: '10px' }} >
+      <Stack spacing={2} sx={{ marginLeft: 2 }}>
+        <Breadcrumbs separator="›" aria-label="breadcrumb">
+          {breadcrumbs}
+        </Breadcrumbs>
+      </Stack>
+      <Container maxWidth="md" sx={{ height: '100vh', margin: '20px auto' }}>
+        <Box textAlign="center" fontSize={24}>
+          お魚定食図鑑
+        </Box>
+        <ImageList sx={{ width: 600, height: 400, margin: '0 auto' }} cols={3} rowHeight={164} >
+          {image.map((item: any) => (
+            <ImageListItem key={item.id}>
+              <img
+                src={require(`../../images/${item.filename}?w=164&h=164&fit=crop&auto=format`)}
+                // src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                alt={item.eatlog_id}
+                loading="lazy"
+                onClick={handleOpen(item.eatlog_id)}
+              />
+            </ImageListItem>
+          ))}
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Card variant="outlined">
+                {fileName !== '' ?
+                  <Container component="div" className="m-auto" >
+                    <img
+                      src={require(`../../images/${fileName}`)}
+                      // src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                      alt={fileName}
+                      width={180}
+                      height={180}
+                      className="object-contain h-2/5 m-auto"
 
-        ))}
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Card variant="outlined">
-              {fileName !== '' ?
-                <Container component="div" className="m-auto" >
-                  <img
-                    src={require(`../../images/${fileName}`)}
-                    // src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                    alt={fileName}
-                    width={180}
-                    height={180}
-                    className="object-contain h-2/5 m-auto"
-
+                    />
+                  </Container> : null
+                }
+                <CardContent>
+                  Date: {date.substr(0, 9)} / Store: {storeName}
+                  <Typography gutterBottom variant="h3" component="div">
+                    {menuName}
+                  </Typography>
+                  <Rating
+                    name="read-only"
+                    value={Number(rating)}
+                    readOnly
                   />
-                </Container> : null
-              }
-              <CardContent>
-                Date: {date.substr(0, 9)} / Store: {storeName}
-                <Typography gutterBottom variant="h3" component="div">
-                  {menuName}
-                </Typography>
-                <Rating
-                  name="read-only"
-                  value={Number(rating)}
-                  readOnly
-                />
-                <Typography variant="body2" color="text.secondary">
-                  {text}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small" onClick={handleClose} > Close</Button>
-              </CardActions>
-            </Card>
-          </Box>
-        </Modal>
-      </ImageList>
-    </Container >
+                  <Typography variant="body2" color="text.secondary">
+                    {text}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" onClick={handleClose} > Close</Button>
+                </CardActions>
+              </Card>
+            </Box>
+          </Modal>
+        </ImageList>
+      </Container >
+    </div>
   );
 }
 export default MealPicturePage;

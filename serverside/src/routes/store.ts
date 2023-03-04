@@ -38,8 +38,8 @@ router.get(
 router.post(
   "/register",
   (req: Request, res: Response) => {
-    const mstStoreRegister = require("../api/store/register");
-    mstStoreRegister(req, res);
+    const registerStore = require("../api/store/register");
+    registerStore(req, res);
   }
 );
 /**

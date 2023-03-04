@@ -13,6 +13,9 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useParams } from 'react-router-dom';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import { Stack, Typography } from '@mui/material';
 
 function MenuFormPage() {
   // user.id, menuName, price, memo, option
@@ -30,6 +33,27 @@ function MenuFormPage() {
   const user = useSelector((state: any) => state.user.data);
   const store = useSelector((state: any) => state.store.data);
   const menu = useSelector((state: any) => state.menu.data);
+
+  //breadcrumb
+  const breadcrumbs = [
+    <Link underline="hover" key="1" color="inherit"
+      href="/">
+      TOP
+    </Link>,
+    <Link
+      underline="hover"
+      key="2"
+      color="inherit"
+      onClick={() => {
+        window.location.href = "/menu/list/" + storeid;
+      }}
+    >
+      メニュー一覧
+    </Link >,
+    <Typography key="3" color="text.primary">
+      メニューマスタ
+    </Typography>,
+  ];
 
   useEffect(() => {
     let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
@@ -86,74 +110,80 @@ function MenuFormPage() {
     };
     updateMenu(dispatch, formData);
   }
-
   return (
-    <Container maxWidth="md" sx={{ height: '100vh', margin: '10px auto' }}>
-      <Box textAlign="center" fontSize={24}>
-        メニューマスタ
-      </Box>
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        label="店名"
-        value={storeName}
-        fullWidth
-        sx={{ margin: '10px auto' }}
-        placeholder="50字以内"
-        onChange={(event) => setStoreName(event.target.value)}
-      />
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        label="メニュー名"
-        value={menuName}
-        fullWidth
-        sx={{ margin: '10px auto' }}
-        placeholder="50字以内"
-        onChange={(event) => setMenuName(event.target.value)}
-      />
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        label="価格"
-        value={price}
-        fullWidth
-        sx={{ margin: '10px auto' }}
-        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-        onChange={(event) => setPrice(event.target.value)}
-      />
-      <FormControl sx={{ minWidth: '100%', marginTop: '20px' }}>
-        <FormLabel id="demo-radio-buttons-group-label">閉店フラグ</FormLabel>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          value={option}
-          name="radio-buttons-group"
-          onChange={(event) => setOption(event.target.value)}
-        >
-          <FormControlLabel value="0" control={<Radio />} label="豊洲直送" />
-          <FormControlLabel value="1" control={<Radio />} label="豊洲直送ではない" />
-          <FormControlLabel value="2" control={<Radio />} label="神のみぞ知る" />
-        </RadioGroup>
-      </FormControl>
-      <TextField
-        id="outlined-basic"
-        variant="outlined"
-        label="メモ"
-        value={memo}
-        fullWidth
-        sx={{ margin: '10px auto' }}
-        placeholder="50字以内"
-        onChange={(event) => setMemo(event.target.value)}
-      />
-      <Box sx={{ minWidth: '300', display: 'flex', justifyContent: 'center' }}>
-        <Button
-          variant="contained"
-          onClick={menuid !== undefined || menuid != null
-            ? handleUpdateMenu
-            : handleRegisterMenu}>登録する
-        </Button>
-      </Box>
-    </Container>
+    <div style={{ height: 400, width: '100%', marginTop: '10px' }} >
+      <Stack spacing={2} sx={{ marginLeft: 2 }}>
+        <Breadcrumbs separator="›" aria-label="breadcrumb">
+          {breadcrumbs}
+        </Breadcrumbs>
+      </Stack>
+      <Container maxWidth="md" sx={{ height: '100vh', margin: '10px auto' }}>
+        <Box textAlign="center" fontSize={24}>
+          メニューマスタ
+        </Box>
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          label="店名"
+          value={storeName}
+          fullWidth
+          sx={{ margin: '10px auto' }}
+          placeholder="50字以内"
+          onChange={(event) => setStoreName(event.target.value)}
+        />
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          label="メニュー名"
+          value={menuName}
+          fullWidth
+          sx={{ margin: '10px auto' }}
+          placeholder="50字以内"
+          onChange={(event) => setMenuName(event.target.value)}
+        />
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          label="価格"
+          value={price}
+          fullWidth
+          sx={{ margin: '10px auto' }}
+          inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+          onChange={(event) => setPrice(event.target.value)}
+        />
+        <FormControl sx={{ minWidth: '100%', marginTop: '20px' }}>
+          <FormLabel id="demo-radio-buttons-group-label">閉店フラグ</FormLabel>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            value={option}
+            name="radio-buttons-group"
+            onChange={(event) => setOption(event.target.value)}
+          >
+            <FormControlLabel value="0" control={<Radio />} label="豊洲直送" />
+            <FormControlLabel value="1" control={<Radio />} label="豊洲直送ではない" />
+            <FormControlLabel value="2" control={<Radio />} label="神のみぞ知る" />
+          </RadioGroup>
+        </FormControl>
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          label="メモ"
+          value={memo}
+          fullWidth
+          sx={{ margin: '10px auto' }}
+          placeholder="50字以内"
+          onChange={(event) => setMemo(event.target.value)}
+        />
+        <Box sx={{ minWidth: '300', display: 'flex', justifyContent: 'center' }}>
+          <Button
+            variant="contained"
+            onClick={menuid !== undefined || menuid != null
+              ? handleUpdateMenu
+              : handleRegisterMenu}>登録する
+          </Button>
+        </Box>
+      </Container>
+    </div>
   );
 }
 export default MenuFormPage;
