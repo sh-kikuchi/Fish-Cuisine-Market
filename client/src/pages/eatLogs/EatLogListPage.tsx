@@ -60,12 +60,8 @@ function EatLogListPage() {
   ];
 
   useEffect(() => {
-    let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
-    jwt = jwt ? JSON.parse(jwt) : '';
-    const accessToken = { accessToken: jwt };
-    console.log(init);
-    if (init === true && accessToken) {
-      getUser(dispatch, accessToken);
+    if (init === true) {
+      getUser(dispatch);
       getData();
     }
   }, [user.id]);

@@ -38,13 +38,8 @@ function StoreListPage() {
   ];
 
   useEffect(() => {
-    let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
-    jwt = jwt ? JSON.parse(jwt) : '';
-    const accessToken = { accessToken: jwt };
-    if (accessToken) {
-      getUser(dispatch, accessToken);
-      getStoresData();
-    }
+    getUser(dispatch);
+    getStoresData();
   }, [user.id]);
 
   const getStoresData = async () => {

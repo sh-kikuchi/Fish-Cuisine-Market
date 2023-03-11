@@ -63,7 +63,7 @@ function EatLogFormPage() {
     jwt = jwt ? JSON.parse(jwt) : '';
     const accessToken = { accessToken: jwt };
     if (init === true && accessToken) {
-      getUser(dispatch, accessToken);
+      getUser(dispatch);
       getData(accessToken);
     }
   }, [user.id]);

@@ -42,13 +42,8 @@ function MealPicturePage() {
   ];
 
   useEffect(() => {
-    let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
-    jwt = jwt ? JSON.parse(jwt) : '';
-    const accessToken = { accessToken: jwt };
-    if (accessToken) {
-      getUser(dispatch, accessToken);
-      getImageData();
-    }
+    getUser(dispatch);
+    getImageData();
   }, [user.id]);
 
   const getImageData = () => {

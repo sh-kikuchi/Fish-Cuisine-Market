@@ -39,13 +39,8 @@ function StoreFormPage() {
     </Typography>,
   ];
   useEffect(() => {
-    let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
-    jwt = jwt ? JSON.parse(jwt) : '';
-    const accessToken = { accessToken: jwt };
-    if (accessToken) {
-      getUser(dispatch, accessToken);
-      getStoreData();
-    }
+    getUser(dispatch);
+    getStoreData();
   }, [user.id]);
 
   const getStoreData = () => {

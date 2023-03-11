@@ -56,16 +56,10 @@ function MenuFormPage() {
   ];
 
   useEffect(() => {
-    let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
-    jwt = jwt ? JSON.parse(jwt) : '';
-    const accessToken = { accessToken: jwt };
-    if (accessToken) {
-      getUser(dispatch, accessToken);
-      getStoreMenuData();
-    }
+    getUser(dispatch);
+    getStoreMenuData();
   }, [user.id]);
 
-  //
   const getStoreMenuData = () => {
     //トークン取得
     if (user.id && storeid) {

@@ -26,9 +26,16 @@ const userSlice = createSlice({
   }
 });
 
-export const getUser = async (dispatch: any, data: any) => {
+export const getUser = async (dispatch: any) => {
+  let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
+  jwt = jwt ? JSON.parse(jwt) : '';
+
+  if (!jwt || jwt === null || jwt === undefined) {
+    window.location.href = "/login"
+  }
+
   const method = "POST";
-  const body = JSON.stringify(data);
+  const body = JSON.stringify(jwt);
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
