@@ -37,7 +37,6 @@ function AuthView() {
     if (isInit) {
       let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
       jwt = jwt ? JSON.parse(jwt) : '';
-
       const accessToken = { accessToken: jwt };
 
       //モードチェンジ（ログイン画面/新規登録画面/編集画面）
@@ -69,6 +68,7 @@ function AuthView() {
     await axios.post("http://localhost:3001/login", formData)
       .then(function (response) {
         if (response.status === 200) {
+          document.cookie = "access_token=" + JSON.stringify(response.data.token);
           localStorage.setItem("data", JSON.stringify(response.data.token));
           return window.location.href = "/" //React-router使えたらそうする
         }
@@ -120,6 +120,7 @@ function AuthView() {
       .then(function (response) {
         setPassword('');
         setNewPassword('');
+        document.cookie = "access_token=" + JSON.stringify(response.data.token);
         localStorage.setItem("data", JSON.stringify(response.data.token));
         setMessage(response.data.message);
       })
