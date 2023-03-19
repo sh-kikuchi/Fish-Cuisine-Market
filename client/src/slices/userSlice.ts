@@ -1,16 +1,14 @@
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+import { createSlice } from "@reduxjs/toolkit";
 interface userState {
   userid: number;
 }
-
 export const userState = {
   userid: 0,
 }
-
-
-//createSlice:reducerとactionsをまとめる
+/**
+ * createSlice:reducerとactionsをまとめる
+ */
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -19,23 +17,24 @@ const userSlice = createSlice({
     error: {}
   },
   reducers: {
-
     setUser: (state, action) => {
       state.data = action.payload;
     },
   }
 });
-
+/**
+ * ユーザー情報取得
+ * @param dispatch
+ */
 export const getUser = async (dispatch: any) => {
   let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
   jwt = jwt ? JSON.parse(jwt) : '';
-
+  const accessToken: any = { accessToken: jwt };
   if (!jwt || jwt === null || jwt === undefined) {
     window.location.href = "/login"
   }
-
   const method = "POST";
-  const body = JSON.stringify(jwt);
+  const body = JSON.stringify(accessToken);
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
@@ -51,7 +50,8 @@ export const getUser = async (dispatch: any) => {
     }
     );
 };
-
-//export(actions/reducer)
+/**
+ * actionとreducerのエクスポート
+ */
 export const { setUser } = userSlice.actions
 export const userReducer = userSlice.reducer

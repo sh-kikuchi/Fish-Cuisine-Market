@@ -23,12 +23,6 @@ function MealPicturePage() {
   const image = useSelector((state: any) => state.image.data);
   const reference = useSelector((state: any) => state.reference.data);
   const [open, setOpen] = useState(false);
-  const [storeName, setStoreName] = useState('');
-  const [menuName, setMenuName] = useState('');
-  const [text, setText] = useState('');
-  const [date, setDate] = useState('');
-  const [rating, setRating] = useState('0');
-  const [fileName, setFileName] = useState('');
 
   //breadcrumb
   const breadcrumbs = [
@@ -55,24 +49,12 @@ function MealPicturePage() {
   const handleOpen = (eatlogid: any) => (e: any) => {
     getReferenceDetail(dispatch, eatlogid);
     if (reference && reference.length) {
-      setStoreName(reference[0].storename);
-      setMenuName(reference[0].menuname);
-      setText(reference[0].text);
-      setDate(reference[0].date);
-      setRating(reference[0].rating);
-      setFileName(reference[0].filename);
       setOpen(true);
     }
   };
 
   const handleClose = () => {
     setOpen(false);
-    setStoreName('');
-    setMenuName('');
-    setText('');
-    setDate('');
-    setRating('0');
-    setFileName('');
   };
 
   const style = {
@@ -118,31 +100,36 @@ function MealPicturePage() {
           >
             <Box sx={style}>
               <Card variant="outlined">
-                {fileName !== '' ?
-                  <Container component="div" className="m-auto" >
+                <Container component="div" className="m-auto" >
+                  {reference.map((ref: any) => (
                     <img
-                      src={require(`../../images/${fileName}`)}
+                      src={require(`../../images/${ref.filename}?w=164&h=164&fit=crop&auto=format`)}
                       // src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                      alt={fileName}
+                      alt={ref.filename}
                       width={180}
                       height={180}
+                      loading="lazy"
                       className="object-contain h-2/5 m-auto"
-
                     />
-                  </Container> : null
-                }
+                  ))}
+                </Container>
                 <CardContent>
-                  Date: {date.substr(0, 9)} / Store: {storeName}
+                  <Typography gutterBottom component="div">
+                    Date:  {reference.map((ref: any) => ref.date.substr(0, 10))}
+                  </Typography>
+                  <Typography gutterBottom component="div">
+                    Store:  {reference.map((ref: any) => ref.storename)}
+                  </Typography>
                   <Typography gutterBottom variant="h3" component="div">
-                    {menuName}
+                    {reference.map((ref: any) => ref.menuname)}
                   </Typography>
                   <Rating
                     name="read-only"
-                    value={Number(rating)}
+                    value={Number(reference.map((ref: any) => ref.rating))}
                     readOnly
                   />
                   <Typography variant="body2" color="text.secondary">
-                    {text}
+                    {reference.map((ref: any) => ref.text)}
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -157,50 +144,3 @@ function MealPicturePage() {
   );
 }
 export default MealPicturePage;
-
-const itemData = [
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
-  },
-  {
-    img: '../../images/1674482177886-41p7j5-home.png',
-    title: 'Bike',
-  },
-];

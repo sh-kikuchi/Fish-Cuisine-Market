@@ -37,14 +37,11 @@ const ReferenceSlice = createSlice({
 
 //get store data
 export const getReferenceDetail = async (dispatch: any, eatlogid: string) => {
-  console.log("test" + eatlogid)
   const params = { eatlogid: eatlogid };
   const query = new URLSearchParams(params);
   const response = await fetch(`http://localhost:3001/reference/detail?${query}`);
   const data = await response.json();
   if (data.reference && data.reference.length !== 0) {
-    console.log("ここ");
-    console.log(data);
     dispatch(setReference(data));
   }
 };

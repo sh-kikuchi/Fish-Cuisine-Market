@@ -67,7 +67,7 @@ function Introduction() {
                         <WorkIcon />
                       </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary="＋messageの親子向け広告配信サービスの入稿システム開発" secondary="2022.1~2022.3" />
+                    <ListItemText primary="＋messageの親子向け広告配信サービスの入稿システム開発" secondary="2022.1-2022.3" />
                   </ListItem>
                   <ListItem>
                     <ListItemAvatar>

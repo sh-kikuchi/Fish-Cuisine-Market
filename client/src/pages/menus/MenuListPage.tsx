@@ -1,8 +1,8 @@
 
 
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { getUser } from '../../slices/userSlice'
 import { getMenus, deleteMenus } from '../../slices/menuSlice';
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
@@ -27,6 +27,7 @@ function MenuListPage() {
   const [init, setInit] = useState(true);
 
   const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user.data);
   const menu = useSelector((state: any) => state.menu.data);
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
 
@@ -46,29 +47,18 @@ function MenuListPage() {
   ];
 
   useEffect(() => {
-    let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
-    jwt = jwt ? JSON.parse(jwt) : '';
-    const accessToken = { accessToken: jwt };
-    console.log(init);
-    if (init === true && accessToken) {
-      getUserData(accessToken);
+    if (init === true) {
+      getUser(dispatch);
+      getData();
     }
-  });
+  }, [user.id]);
 
-  const getUserData = async (accessToken: any) => {
-    //get Tokens
-    await axios.post("http://localhost:3001/auth/show", accessToken)
-      .then(function (response) {
-        setUserid(response.data.id);
-        if (userid && storeid) {
-          getMenus(dispatch, storeid);
-          setInit(false);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-        window.location.href = "/login" //取得失敗時はログイン画面に戻る
-      });
+  const getData = async () => {
+    //トークン取得
+    if (user.id && storeid) {
+      getMenus(dispatch, storeid);
+      setInit(false);
+    }
   };
 
   const rows = menu;
@@ -172,5 +162,4 @@ function MenuListPage() {
     </div>
   );
 }
-
 export default MenuListPage;

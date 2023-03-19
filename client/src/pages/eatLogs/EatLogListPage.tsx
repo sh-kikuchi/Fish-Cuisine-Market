@@ -77,7 +77,6 @@ function EatLogListPage() {
 
   const rows = eatLog;
 
-
   const handleDeleteRows = () => {
     console.log('handleDeleteRows is called');
     if (selectionModel.length === 0) {
