@@ -20,10 +20,7 @@ const columns: GridColDef[] = [
   { field: 'rating', headerName: '★', width: 100 },
 ];
 
-// function FormList(props: Props) {
 function EatLogListPage() {
-
-  //get QueryParams
   const { storeid } = useParams();
   const { menuid } = useParams();
 

@@ -76,7 +76,6 @@ function EatLogFormPage() {
   }
 
   if (init && eatLog.length !== 0) {
-    alert(eatLog[0].date.substr(0, 10));
     setText(eatLog[0].text);
     setDate(eatLog[0].date.substr(0, 10));
     setRating(eatLog[0].rating);

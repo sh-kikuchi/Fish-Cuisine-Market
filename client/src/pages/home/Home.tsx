@@ -8,29 +8,23 @@ import { TreeView, TreeItem } from '@mui/lab';
 
 function Home() {
   useEffect(() => {
-    //トークン取得
     let data = localStorage.getItem('data');
     if (!data || data === null || data === undefined) {
       window.location.href = "/login"
     }
   });
-
   const handleMoveIntroductionPage = () => {
     window.location.href = "/introduction";
   }
-
   const handleMoveStoreListPage = () => {
     window.location.href = "/store/list";
   }
-
   const handleMoveLandscapePage = () => {
     window.location.href = "/imageList/landscape/toyosu";
   }
-
   const handleMoveMealPicturePage = () => {
     window.location.href = "/imageList/meal/fish";
   }
-
   return (
     <div className="Home">
       <Container maxWidth="md" sx={{ pt: 5 }}>
