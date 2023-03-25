@@ -28,12 +28,12 @@ function Introduction() {
     </Typography>,
   ];
   useEffect(() => {
-    //トークン取得
-    let data = localStorage.getItem('data');
-    console.log(data);
-    if (!data || data === null || data === undefined) {
-      window.location.href = "/login"
-    }
+    // //トークン取得
+    // let data = localStorage.getItem('data');
+    // console.log(data);
+    // if (!data || data === null || data === undefined) {
+    //   window.location.href = "/login"
+    // }
   });
   return (
     <div style={{ height: 400, width: '100%', marginTop: '10px' }} >

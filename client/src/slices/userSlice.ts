@@ -27,21 +27,14 @@ const userSlice = createSlice({
  * @param dispatch
  */
 export const getUser = async (dispatch: any) => {
-  let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
-  jwt = jwt ? JSON.parse(jwt) : '';
-  const accessToken: any = { accessToken: jwt };
-  if (!jwt || jwt === null || jwt === undefined) {
-    window.location.href = "/login"
-  }
   const method = "POST";
-  const body = JSON.stringify(accessToken);
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   };
-  fetch("http://localhost:3001/auth/show", { method, headers, body, credentials: 'include' })
+  fetch("http://localhost:3001/auth/show", { method, headers, credentials: 'include' })
     .then((res) =>
-      res.json()
+      res.status === 200 ? res.json() : location.href = '/login'
     ).then((data) => {
       dispatch(setUser(data));
     })
