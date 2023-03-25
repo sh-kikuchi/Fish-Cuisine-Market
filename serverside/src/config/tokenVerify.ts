@@ -12,7 +12,7 @@ function tokenVerify(accessToken: string, req: Request, res: Response) {
       console.log(`ERROR: err.message=[${err.message}]`);
       result = err;
     } else {
-      console.log(`OK: decoded.email=[${decoded.email}], name=[${decoded.name}]`);
+      // console.log(`OK: decoded.email=[${decoded.email}], name=[${decoded.name}]`);
       result = decoded;
     }
   });

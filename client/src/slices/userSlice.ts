@@ -39,7 +39,7 @@ export const getUser = async (dispatch: any) => {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   };
-  fetch("http://localhost:3001/auth/show", { method, headers, body })
+  fetch("http://localhost:3001/auth/show", { method, headers, body, credentials: 'include' })
     .then((res) =>
       res.json()
     ).then((data) => {

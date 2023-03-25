@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction } from 'express';
 const router = express.Router();
 
 /**
- * 定食屋マスタ取得
+ * マスタ取得
  * request : string { email: '', password: '' },
  * response:
  */
@@ -15,9 +15,8 @@ router.get(
     showStores(req, res, userid);
   }
 );
-
 /**
- * 定食屋マスタ取得
+ * 詳細取得
  * request : string { email: '', password: '' },
  * response:
  */
@@ -31,7 +30,7 @@ router.get(
   }
 );
 /**
- * 定食屋マスタ登録
+ * マスタ登録
  * request : string { email: '', password: '' },
  * response:
  */
@@ -43,7 +42,7 @@ router.post(
   }
 );
 /**
- * 定食屋マスタ更新
+ * マスタ更新
  * request : string { email: '', password: '' },
  * response:
  */
@@ -55,7 +54,7 @@ router.post(
   }
 );
 /**
- * 定食屋削除
+ * マスタ削除
  * request : string { email: '', password: '' },
  * response:
  */

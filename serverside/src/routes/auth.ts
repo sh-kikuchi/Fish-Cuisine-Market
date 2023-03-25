@@ -54,9 +54,7 @@ router.post(
 router.post(
   "/auth/show",
   (req: Request, res: Response) => {
-    console.log(req.body.accessToken);
-    const result = tokenVerify(req.body.accessToken, req, res);
-    console.log(result);
+    const result = tokenVerify(req.cookies.access_token, req, res);
 
     if (result.name && result.email) {
       res.status(200).send({ id: result.id, username: result.name, email: result.email });

@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 import multer from "multer";
 import * as log4js from "log4js";
 const { pool } = require("../serverside/database/pool");
-
+app.use(cookieParser());
 
 //env
 const dotenv = require('dotenv');
@@ -17,7 +17,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use(flash());
-app.use(cookieParser());
 
 //CORS対応
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -28,6 +27,8 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
     "GET, POST, PUT, PATCH, DELETE, OPTION"
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Set-Cookie", "path=/; secure; HttpOnly; SameSite=None");
   next();
 })
 
@@ -71,6 +72,17 @@ app.post('/image', (req: any, res) => {
     }
   })
 });
+
+//cookie Test
+// app.get('/weekend', (req, res) => {
+//   console.log('hello');
+//   if (!!req.cookies) {
+//     console.log(req.cookies);
+//   }
+//   // cookieを設定
+//   res.cookie('test', 'jfhgghfdjghdfjkghfjdkgh', { maxAge: 60000, httpOnly: false });
+//   res.send()
+// })
 
 //Routes
 const authRouter = require('./src/routes/auth');
