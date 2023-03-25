@@ -1,12 +1,16 @@
 import React from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from '../../slices/userSlice'
 import { Button, Container, Stack, TextField, Box } from '@mui/material';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 function AuthView() {
+  //store
+  const user = useSelector((state: any) => state.user.data);
+  const dispatch = useDispatch();
 
   //useState
-  const [userid, setUserid] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,28 +21,9 @@ function AuthView() {
   const [message, setMessage] = useState('');
 
 
-  //編集モードのみ
-  const getUserData = async (accessToken: any) => {
-    //トークン取得
-    await axios.post("http://localhost:3001/auth/show", accessToken)
-      .then(function (response) {
-        setUserid(response.data.id);
-        setUsername(response.data.username);
-        setEmail(response.data.email);
-      })
-      .catch(function (error) {
-        console.log(error);
-        window.location.href = "/login" //取得失敗時はログイン画面に戻る
-      });
-  };
-
   //レンダリングされた後に実行
   useEffect(() => {
     if (isInit) {
-      let jwt = localStorage.getItem('data') ? localStorage.getItem('data') : '';
-      jwt = jwt ? JSON.parse(jwt) : '';
-      const accessToken = { accessToken: jwt };
-
       //モードチェンジ（ログイン画面/新規登録画面/編集画面）
       const location = window.location.pathname;
       switch (location) {
@@ -50,12 +35,13 @@ function AuthView() {
           break;
         case '/edit':
           setMode('edit');
-          getUserData(accessToken);
+          getUser(dispatch);
           break;
       }
     }
     console.log('mode: ' + mode);
     setIsInit(false);
+
   });
 
   //ログイン
@@ -110,7 +96,7 @@ function AuthView() {
   //更新処理
   const handleClickEdit = async () => {
     const formData = {
-      userid: userid,
+      userid: user.id,
       username: username,
       email: email,
       password: password,
@@ -146,13 +132,13 @@ function AuthView() {
             <TextField
               required
               label="ユーザー名"
-              value={username}
+              value={user.username}
               onChange={(event) => setUsername(event.target.value)} />
           }
           <TextField
             required
             label="メールアドレス"
-            value={email}
+            value={user.email}
             onChange={(event) => setEmail(event.target.value)} />
           <TextField
             required
@@ -175,7 +161,6 @@ function AuthView() {
             color="primary"
             variant="contained"
             size="large"
-            value={userid}
             onClick={
               mode === 'login' ? handleClickLogin
                 : mode === 'register' ? handleClickRegister
@@ -194,5 +179,4 @@ function AuthView() {
     </div>
   );
 }
-
 export default AuthView;
