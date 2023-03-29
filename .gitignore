@@ -6,6 +6,7 @@ client/dist
 
 # serverside
 /.vscode/*
+.vscode
 
 # testing
 /coverage

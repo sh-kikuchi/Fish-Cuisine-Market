@@ -56,6 +56,8 @@ export const getEatLogDetail = async (dispatch: any, storeid: string, menuid: st
 };
 
 export const updateEatLog = async (dispatch: any, data: any, file: any) => {
+  console.log('data');
+  console.log(data);
   const method = "POST";
   const body = JSON.stringify(data);
   const headers = {
@@ -64,7 +66,9 @@ export const updateEatLog = async (dispatch: any, data: any, file: any) => {
   };
   fetch("http://localhost:3001/eatLog/update", { method, headers, body })
     .then((res) =>
-      file ? uploadFile(file, body) : null
+      Object.keys(file).length !== 0
+        ? uploadFile(file, body)
+        : window.location.href = '/eatLog/list/' + data.storeid + '/' + data.menuid
     )
     .catch(console.error);
 };
