@@ -80,7 +80,7 @@ function MealPicturePage() {
         <Box textAlign="center" fontSize={24}>
           お魚定食図鑑
         </Box>
-        <ImageList sx={{ width: 600, height: 400, margin: '0 auto' }} cols={3} rowHeight={164} >
+        <ImageList sx={{ width: 600, height: 400, margin: '0 auto' }} cols={3} rowHeight={190} >
           {image.map((item: any) => (
             <ImageListItem key={item.id}>
               <img
