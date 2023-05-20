@@ -39,7 +39,6 @@ export const getUser = async (dispatch: any) => {
       dispatch(setUser(data));
     })
     .catch(function () {
-      alert("こっち");
       location.href = '/login'
     }
     );

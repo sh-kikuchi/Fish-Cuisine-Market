@@ -29,5 +29,5 @@ npm start
 
 ### ■ ServerSide
 ```
-yarn node --loader ts-node/esm index.ts
+npx ts-node index.ts 
 ```

@@ -30,7 +30,7 @@ function LandscapePage() {
         <Box textAlign="center" fontSize={24}>
           豊洲憧憬
         </Box>
-        <ImageList sx={{ width: 500, height: 500, margin: '0 auto' }} cols={3} rowHeight={164} >
+        <ImageList sx={{ width: 600, height: 400, margin: '0 auto' }} cols={3} rowHeight={190} >
           {itemData.map((item) => (
             <ImageListItem key={item.img}>
               <img
@@ -88,5 +88,41 @@ const itemData = [
   {
     img: require('../../images/landscape/20230128_10.JPG'),
     title: '20230128_10',
+  },
+  {
+    img: require('../../images/landscape/20230402_1.JPG'),
+    title: '20230402_1',
+  },
+  {
+    img: require('../../images/landscape/20230402_2.JPG'),
+    title: '20230402_2',
+  },
+  {
+    img: require('../../images/landscape/20230402_3.JPG'),
+    title: '20230402_3',
+  },
+  {
+    img: require('../../images/landscape/20230402_4.JPG'),
+    title: '20230402_4',
+  },
+  {
+    img: require('../../images/landscape/20230402_5.JPG'),
+    title: '20230402_5',
+  },
+  {
+    img: require('../../images/landscape/20230402_6.JPG'),
+    title: '20230402_6',
+  },
+  {
+    img: require('../../images/landscape/20230402_7.JPG'),
+    title: '20230402_7',
+  },
+  {
+    img: require('../../images/landscape/20230402_8.JPG'),
+    title: '20230402_8',
+  },
+  {
+    img: require('../../images/landscape/20230402_9.JPG'),
+    title: '20230402_9',
   },
 ];

@@ -10,7 +10,7 @@ const trashFiles = (targetFiles: Array<any>) => {
   console.log(TAG + 'begin');
   try {
     for (let i = 0; i < targetFiles.length; i++) {
-      fs.unlinkSync('C:/Users/nbcc9/react-express/client/src/images/' + targetFiles[i].filename);
+      fs.unlinkSync(process.env.DIR_PATH + targetFiles[i].filename);
       console.log('削除しました。');
     }
   } catch (error) {

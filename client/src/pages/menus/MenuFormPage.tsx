@@ -71,6 +71,7 @@ function MenuFormPage() {
   };
 
   if (init && store.length !== 0 && menu.length !== 0) {
+    console.log(menu);
     setMenuName(menu[0].name);
     setPrice(menu[0].price);
     setMemo(menu[0].memo);
