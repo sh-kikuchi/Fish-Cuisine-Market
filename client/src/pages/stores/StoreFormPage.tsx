@@ -31,7 +31,7 @@ function StoreFormPage() {
       TOP
     </Link>,
     <Link underline="hover" key="1" color="inherit"
-      href="store/list">
+      href="/store/list">
       お店一覧
     </Link>,
     <Typography key="3" color="text.primary">

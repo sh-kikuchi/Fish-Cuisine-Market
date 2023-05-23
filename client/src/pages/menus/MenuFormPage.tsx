@@ -71,7 +71,6 @@ function MenuFormPage() {
   };
 
   if (init && store.length !== 0 && menu.length !== 0) {
-    console.log(menu);
     setMenuName(menu[0].name);
     setPrice(menu[0].price);
     setMemo(menu[0].memo);
@@ -79,6 +78,7 @@ function MenuFormPage() {
     setOption(menu[0].region_flg);
     setInit(false);
   } else if (init && store.length !== 0) {
+    console.log(store);
     setStoreName(store[0].name);
     setInit(false);
   }

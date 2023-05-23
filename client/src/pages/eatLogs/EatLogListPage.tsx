@@ -121,15 +121,6 @@ function EatLogListPage() {
           </Tooltip>
         </Box>
         <Box component='div'>
-          <Tooltip title="1つ選択" placement="top">
-            <Button
-              variant="contained"
-              color='primary'
-              sx={{ margin: 1 }}
-              onClick={handleDeleteRows}>
-              削除
-            </Button>
-          </Tooltip>
           <Tooltip title="複数" placement="top">
             <Button
               variant="contained"
@@ -137,6 +128,15 @@ function EatLogListPage() {
               sx={{ margin: 1 }}
               onClick={handleMoveDetailPage}>
               詳細
+            </Button>
+          </Tooltip>
+          <Tooltip title="1つ選択" placement="top">
+            <Button
+              variant="contained"
+              color='primary'
+              sx={{ margin: 1 }}
+              onClick={handleDeleteRows}>
+              削除
             </Button>
           </Tooltip>
         </Box>

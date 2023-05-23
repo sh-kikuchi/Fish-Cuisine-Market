@@ -127,22 +127,22 @@ function MenuListPage() {
           </Tooltip>
         </Box>
         <Box component='div'>
-          <Tooltip title="1つ選択" placement="top">
+          <Tooltip title="複数選択可" placement="top">
             <Button
               variant="contained"
               color='primary'
               sx={{ margin: 1 }}
-              onClick={handleDeleteRows}>
-              削除
+              onClick={handleMoveDetailPage}>
+              詳細
             </Button>
           </Tooltip>
-          <Tooltip title="複数選択可" placement="top">
+          <Tooltip title="1つ選択" placement="top">
             <Button
               variant="contained"
               color='error'
               sx={{ margin: 1 }}
-              onClick={handleMoveDetailPage}>
-              詳細
+              onClick={handleDeleteRows}>
+              削除
             </Button>
           </Tooltip>
         </Box>
