@@ -38,7 +38,7 @@ const imageSlice = createSlice({
 export const getImages = async (dispatch: any, param: string) => {
   const params = { userid: param };
   const query = new URLSearchParams(params);
-  const response = await fetch(`http://localhost:3001/file/show?${query}`);
+  const response = await fetch(`${process.env.REACT_APP_PATH}/file/show?${query}`);
   const data = await response.json();
   if (data.images.length !== 0) {
     dispatch(setImages(data));

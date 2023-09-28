@@ -25,6 +25,7 @@ I worked in the IT industry in Toyosu and experienced the good and the bad. I to
 ### ■ Client
 ```
 npm start
+yarn start
 ```
 
 ### ■ ServerSide
